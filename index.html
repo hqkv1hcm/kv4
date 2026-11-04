@@ -68,11 +68,11 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#4f46e5', // Indigo 600 - đậm hơn chút để tương phản tốt
+                        primary: '#4f46e5', // Indigo 600
                         'primary-hover': '#4338ca', // Indigo 700
                         success: '#10b981', 
                         danger: '#ef4444', 
-                        background: '#f8fafc', // Xám nhạt dịu mắt
+                        background: '#f8fafc', // Xám nhạt
                         surface: '#ffffff',
                     },
                     boxShadow: {
@@ -160,11 +160,9 @@
                         <div class="absolute top-0 right-0 p-4 opacity-5 transform translate-x-2 -translate-y-2">
                             <i class="fa-solid fa-wallet text-6xl"></i>
                         </div>
-                        
                         <div class="relative z-10">
                             <p class="text-sm text-slate-300 font-medium mb-1">Số Dư Khả Dụng</p>
                             <h3 class="text-3xl md:text-4xl font-bold tracking-tight mb-3" id="total-balance">0 ₫</h3>
-                            
                             <div class="inline-flex items-center gap-1.5 text-xs bg-white/10 px-2.5 py-1.5 rounded-lg border border-white/10 backdrop-blur-md">
                                 <span class="text-slate-300">Đang tạm ứng:</span>
                                 <span id="pending-advances-amount" class="font-semibold text-white">0 ₫</span>
@@ -208,7 +206,7 @@
                         </div>
                     </div>
                     
-                    <!-- Recent Transactions Mini with Pagination -->
+                    <!-- Recent Transactions Mini -->
                     <div class="bg-surface rounded-2xl p-5 md:p-6 shadow-card border border-slate-100 flex flex-col h-full lg:col-span-2">
                         <div class="flex justify-between items-center mb-4">
                             <h3 class="text-base font-bold text-slate-800">Giao dịch gần đây</h3>
@@ -249,7 +247,6 @@
                         </label>
                         <div id="image-preview-container" class="hidden w-16 h-16 bg-white/10 rounded-lg border border-white/20 border-dashed overflow-hidden flex items-center justify-center relative flex-shrink-0">
                             <img id="receipt-preview" src="" alt="Preview" class="w-full h-full object-cover">
-                            <!-- Nút xoá ảnh -->
                             <button type="button" onclick="removeAttachedImage()" class="absolute top-1 right-1 w-5 h-5 bg-black/60 hover:bg-danger rounded-full text-white flex items-center justify-center text-[10px] transition-colors z-10" title="Xoá ảnh này">
                                 <i class="fa-solid fa-xmark"></i>
                             </button>
@@ -351,7 +348,7 @@
             <!-- VIEW: TRANSACTIONS LIST -->
             <div id="view-transactions" class="hidden">
                 <div class="bg-surface rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
-                    <div class="p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
+                    <div class="p-5 md:p-6 border-b border-slate-100 flex justify-between items-center bg-slate-50/50">
                         <h3 class="text-lg font-bold text-slate-800">Lịch sử giao dịch</h3>
                         <div class="flex gap-2">
                             <select class="text-sm px-3 py-1.5 rounded-lg border border-slate-200 outline-none focus:ring-1 focus:ring-primary bg-white text-slate-600">
@@ -361,21 +358,10 @@
                             </select>
                         </div>
                     </div>
-                    <div class="p-0 overflow-x-auto">
-                        <table class="w-full text-left border-collapse min-w-[600px]">
-                            <thead>
-                                <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
-                                    <th class="py-3 px-6 font-medium">Ngày</th>
-                                    <th class="py-3 px-6 font-medium">Danh mục</th>
-                                    <th class="py-3 px-6 font-medium">Mô tả</th>
-                                    <th class="py-3 px-6 font-medium text-right">Số tiền</th>
-                                    <th class="py-3 px-6 font-medium text-center">Hành động</th>
-                                </tr>
-                            </thead>
-                            <tbody id="full-transactions-list" class="text-sm">
-                                <!-- Injected via JS -->
-                            </tbody>
-                        </table>
+                    <div class="p-0">
+                        <div id="full-transactions-list" class="divide-y divide-slate-100 flex flex-col">
+                            <!-- Injected via JS -->
+                        </div>
                         <div id="empty-transactions-state" class="hidden flex-col items-center justify-center py-12 text-slate-400">
                             <i class="fa-regular fa-folder-open text-4xl mb-3"></i>
                             <p>Chưa có dữ liệu giao dịch</p>
@@ -395,47 +381,37 @@
                         <form id="advance-form" class="space-y-4">
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Người nhận</label>
-                                <input type="text" id="a-person" required placeholder="Tên người nhận..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary outline-none text-slate-700">
+                                <input type="text" id="a-person" required placeholder="Tên người nhận..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary outline-none text-slate-700 text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Số tiền (VNĐ)</label>
-                                <input type="text" id="a-amount" required placeholder="0" class="w-full min-w-0 px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary outline-none font-semibold text-slate-800" oninput="formatCurrencyInput(this)">
+                                <input type="text" id="a-amount" required placeholder="0" class="w-full min-w-0 px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary outline-none font-semibold text-slate-800 text-base" oninput="formatCurrencyInput(this)">
                             </div>
                             <div class="w-full overflow-hidden">
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Ngày</label>
-                                <input type="date" id="a-date" required class="w-full box-border min-w-0 px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary outline-none text-slate-700">
+                                <input type="date" id="a-date" required class="w-full box-border min-w-0 px-3 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary outline-none text-slate-700 text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-slate-700 mb-1">Lý do</label>
-                                <input type="text" id="a-description" required placeholder="Vd: Mua vật tư, đi công tác..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary outline-none text-slate-700">
+                                <input type="text" id="a-description" required placeholder="Vd: Mua vật tư, đi công tác..." class="w-full px-4 py-2.5 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-primary outline-none text-slate-700 text-sm">
                             </div>
-                            <button type="submit" class="w-full bg-primary hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors shadow-sm shadow-blue-200">
+                            <button type="submit" class="w-full bg-primary hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-xl transition-colors shadow-sm text-sm">
                                 Lưu Tạm Ứng
                             </button>
                         </form>
                     </div>
                     
                     <!-- Danh sách tạm ứng -->
-                    <div class="bg-surface rounded-2xl p-6 shadow-sm border border-slate-100 lg:col-span-2">
-                        <h3 class="text-lg font-bold text-slate-800 mb-4">Danh sách công nợ / Tạm ứng</h3>
-                        <div class="overflow-x-auto">
-                            <table class="w-full text-left border-collapse min-w-[500px]">
-                                <thead>
-                                    <tr class="bg-slate-50 text-slate-500 text-xs uppercase tracking-wider border-b border-slate-100">
-                                        <th class="py-3 px-4 font-medium">Người nhận</th>
-                                        <th class="py-3 px-4 font-medium">Chi tiết</th>
-                                        <th class="py-3 px-4 font-medium text-right">Số tiền</th>
-                                        <th class="py-3 px-4 font-medium text-center">Trạng thái / Cập nhật</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="advances-list" class="text-sm">
-                                    <!-- Injected via JS -->
-                                </tbody>
-                            </table>
-                            <div id="empty-advances-state" class="hidden flex-col items-center justify-center py-8 text-slate-400">
-                                <i class="fa-solid fa-check-double text-4xl mb-3 text-slate-300"></i>
-                                <p>Không có khoản tạm ứng nào đang chờ</p>
-                            </div>
+                    <div class="bg-surface rounded-2xl p-0 md:p-0 shadow-sm border border-slate-100 lg:col-span-2 overflow-hidden flex flex-col">
+                        <div class="p-5 md:p-6 border-b border-slate-100 bg-slate-50/50">
+                            <h3 class="text-lg font-bold text-slate-800">Danh sách công nợ / Tạm ứng</h3>
+                        </div>
+                        <div id="advances-list" class="divide-y divide-slate-100 flex flex-col flex-1">
+                            <!-- Injected via JS -->
+                        </div>
+                        <div id="empty-advances-state" class="hidden flex-col items-center justify-center py-10 text-slate-400">
+                            <i class="fa-solid fa-check-double text-4xl mb-3 text-slate-300"></i>
+                            <p>Không có khoản tạm ứng nào đang chờ</p>
                         </div>
                     </div>
                 </div>
@@ -444,9 +420,8 @@
         </div>
     </main>
 
-    <!-- Toast Notification Container -->
+    <!-- Toast Notification -->
     <div id="toast-container" class="fixed bottom-20 md:bottom-6 right-4 z-50 flex flex-col gap-2 pointer-events-none">
-        <!-- Toasts go here -->
     </div>
 
     <!-- Transaction Detail Modal -->
@@ -459,7 +434,7 @@
                 </button>
             </div>
             <div class="p-5 overflow-y-auto" id="tx-modal-content">
-                <!-- Nội dung chi tiết sẽ được chèn qua JS -->
+                <!-- Injected via JS -->
             </div>
         </div>
     </div>
@@ -492,12 +467,10 @@
         let transactions = JSON.parse(localStorage.getItem('smartSpend_data')) || [];
         let advances = JSON.parse(localStorage.getItem('smartSpend_advances')) || [];
         let expenseChartInstance = null;
-        let currentEditId = null; // Biến lưu trữ ID của giao dịch đang được sửa
-        let currentDashboardPage = 1; // Trang hiện tại của danh sách giao dịch mini
-        const dashboardItemsPerPage = 5; // Số lượng giao dịch hiển thị trên 1 trang
+        let currentEditId = null; 
+        let currentDashboardPage = 1; 
+        const dashboardItemsPerPage = 5; 
 
-        // --- CONSTANTS ---
-        // Biểu tượng cho từng danh mục
         const categoryConfig = {
             'Ăn uống': { icon: 'fa-burger', color: 'bg-orange-100 text-orange-500' },
             'Di chuyển': { icon: 'fa-car', color: 'bg-blue-100 text-blue-500' },
@@ -514,12 +487,10 @@
             'Khác': { icon: 'fa-layer-group', color: 'bg-slate-100 text-slate-500' }
         };
 
-        // Hàm định dạng tiền tệ (VD: 100,000)
         function formatMoney(amount) {
             return new Intl.NumberFormat('vi-VN').format(amount) + ' ₫';
         }
 
-        // Format input khi người dùng gõ
         function formatCurrencyInput(input) {
             let value = input.value.replace(/\D/g, "");
             if (value === "") {
@@ -529,22 +500,19 @@
             input.value = new Intl.NumberFormat('vi-VN').format(parseInt(value, 10));
         }
 
-        // Lấy giá trị số từ input đã format
         function getNumberFromFormatted(str) {
             if(!str) return 0;
             return parseInt(str.replace(/\D/g, ""), 10);
         }
 
-        // Format ngày (YYYY-MM-DD to DD/MM/YYYY)
         function formatDate(dateStr) {
             const parts = dateStr.split('-');
             if(parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
             return dateStr;
         }
 
-        // --- UI NAVIGATION & RENDERING ---
+        // --- UI NAVIGATION ---
         function navigate(view) {
-            // Cập nhật title
             const titles = {
                 'dashboard': 'Tổng quan',
                 'add': 'Thêm giao dịch mới',
@@ -553,7 +521,6 @@
             };
             document.getElementById('page-title').innerText = titles[view] || 'Quản lý chi tiêu';
 
-            // Reset tabs
             const navIds = ['dashboard', 'add', 'transactions', 'advances'];
             navIds.forEach(id => {
                 const el = document.getElementById(`nav-${id}`);
@@ -563,14 +530,12 @@
                 if (viewEl) viewEl.classList.add('hidden');
             });
 
-            // Set active tab
             const activeBtn = document.getElementById(`nav-${view}`);
             if (activeBtn) activeBtn.className = "nav-btn w-full flex flex-col md:flex-row items-center gap-1.5 md:gap-3 px-3 py-2.5 rounded-lg bg-indigo-50 text-primary font-medium transition-all duration-200";
             
             const activeView = document.getElementById(`view-${view}`);
             if (activeView) activeView.classList.remove('hidden');
 
-            // Render specific view data
             if (view === 'dashboard') {
                 renderDashboard();
             } else if (view === 'transactions') {
@@ -582,7 +547,6 @@
                 }
             } else if (view === 'add') {
                 if (!currentEditId) {
-                    // Nếu không phải đang sửa, reset form về trạng thái thêm mới
                     document.getElementById('page-title').innerText = 'Thêm giao dịch mới';
                     document.getElementById('transaction-form').reset();
                     document.getElementById('t-amount').value = '';
@@ -590,7 +554,6 @@
                     document.getElementById('receipt-preview').src = '';
                     document.getElementById('btn-submit-tx').innerText = 'Lưu Giao Dịch';
                     document.getElementById('btn-cancel-edit').classList.add('hidden');
-                    // Set default date to today
                     if(!document.getElementById('t-date').value) {
                         document.getElementById('t-date').value = new Date().toISOString().split('T')[0];
                     }
@@ -611,24 +574,20 @@
                     balance -= t.amount;
                 }
             });
-            
-            // Tính tổng tiền đang cho tạm ứng (chưa hoàn)
             let pendingAdvances = advances.filter(a => a.status === 'pending').reduce((sum, a) => sum + a.amount, 0);
-            balance -= pendingAdvances; // Trừ tiền tạm ứng khỏi số dư khả dụng
+            balance -= pendingAdvances; 
             
             return { balance, income, expense, pendingAdvances };
         }
 
+        // --- DASHBOARD ---
         function renderDashboard() {
             const { balance, income, expense, pendingAdvances } = calculateTotals();
-            
-            // Cập nhật thẻ tóm tắt
             document.getElementById('total-balance').innerText = formatMoney(balance);
             document.getElementById('total-income').innerText = formatMoney(income);
             document.getElementById('total-expense').innerText = formatMoney(expense);
             document.getElementById('pending-advances-amount').innerText = formatMoney(pendingAdvances);
 
-            // Render danh sách gần đây có phân trang
             const recentContainer = document.getElementById('recent-transactions-list');
             const paginationContainer = document.getElementById('recent-pagination');
             recentContainer.innerHTML = '';
@@ -636,7 +595,6 @@
             const allRecent = [...transactions].reverse();
             const totalPages = Math.ceil(allRecent.length / dashboardItemsPerPage) || 1;
             
-            // Đảm bảo trang hiện tại hợp lệ
             if (currentDashboardPage > totalPages) currentDashboardPage = totalPages;
             if (currentDashboardPage < 1) currentDashboardPage = 1;
 
@@ -660,25 +618,20 @@
                                 <div class="w-10 h-10 rounded-xl ${conf.color} flex items-center justify-center">
                                     <i class="fa-solid ${conf.icon}"></i>
                                 </div>
-                                <div>
-                                    <h4 class="text-sm font-semibold text-slate-800">${t.description || t.category}</h4>
+                                <div class="flex-1 min-w-0">
+                                    <h4 class="text-sm font-semibold text-slate-800 truncate">${t.description || t.category}</h4>
                                     <p class="text-xs text-slate-400">${t.category} • ${formatDate(t.date)}</p>
                                 </div>
                             </div>
-                            <span class="font-bold text-sm ${amountClass}">${amountSign}${formatMoney(t.amount)}</span>
+                            <span class="font-bold text-sm ${amountClass} whitespace-nowrap ml-2">${amountSign}${formatMoney(t.amount)}</span>
                         </div>
                     `;
                 });
 
-                // Xử lý thanh phân trang
                 if (totalPages > 1) {
                     paginationContainer.classList.remove('hidden');
                     let pageHtml = '';
-                    
-                    // Nút Prev
                     pageHtml += `<button onclick="changeDashboardPage(${currentDashboardPage - 1})" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors" ${currentDashboardPage === 1 ? 'disabled' : ''}><i class="fa-solid fa-chevron-left text-xs"></i></button>`;
-                    
-                    // Nút số trang (rút gọn nếu quá nhiều trang)
                     for (let i = 1; i <= totalPages; i++) {
                         if (totalPages <= 5 || i === 1 || i === totalPages || Math.abs(i - currentDashboardPage) <= 1) {
                             const isActive = i === currentDashboardPage;
@@ -690,17 +643,12 @@
                             }
                         }
                     }
-                    
-                    // Nút Next
                     pageHtml += `<button onclick="changeDashboardPage(${currentDashboardPage + 1})" class="w-8 h-8 rounded-lg flex items-center justify-center text-slate-500 hover:bg-slate-100 disabled:opacity-30 disabled:cursor-not-allowed transition-colors" ${currentDashboardPage === totalPages ? 'disabled' : ''}><i class="fa-solid fa-chevron-right text-xs"></i></button>`;
-                    
                     paginationContainer.innerHTML = pageHtml;
                 } else {
                     paginationContainer.classList.add('hidden');
                 }
             }
-
-            // Render Chart
             renderChart();
         }
 
@@ -711,8 +659,6 @@
 
         function renderChart() {
             const ctx = document.getElementById('expenseChart').getContext('2d');
-            
-            // Tính toán chi phí theo danh mục
             const expenseByCategory = {};
             transactions.filter(t => t.type === 'expense').forEach(t => {
                 expenseByCategory[t.category] = (expenseByCategory[t.category] || 0) + t.amount;
@@ -726,7 +672,6 @@
             }
 
             if (data.length === 0) {
-                // Biểu đồ rỗng nếu chưa có data
                 expenseChartInstance = new Chart(ctx, {
                     type: 'doughnut',
                     data: {
@@ -738,10 +683,8 @@
                 return;
             }
 
-            // Màu sắc tương ứng với danh mục
             const colors = labels.map(label => {
                 const conf = categoryConfig[label];
-                // Lấy mã màu Hex tương đối dựa trên class tailwind
                 if(conf.color.includes('orange')) return '#f97316';
                 if(conf.color.includes('blue')) return '#3b82f6';
                 if(conf.color.includes('purple')) return '#a855f7';
@@ -752,20 +695,14 @@
                 if(conf.color.includes('yellow')) return '#ca8a04';
                 if(conf.color.includes('rose')) return '#f43f5e';
                 if(conf.color.includes('emerald')) return '#10b981';
-                return '#94a3b8'; // default
+                return '#94a3b8';
             });
 
             expenseChartInstance = new Chart(ctx, {
                 type: 'doughnut',
                 data: {
                     labels: labels,
-                    datasets: [{
-                        data: data,
-                        backgroundColor: colors,
-                        borderWidth: 2,
-                        borderColor: '#ffffff',
-                        hoverOffset: 4
-                    }]
+                    datasets: [{ data: data, backgroundColor: colors, borderWidth: 2, borderColor: '#ffffff', hoverOffset: 4 }]
                 },
                 options: {
                     responsive: true,
@@ -773,31 +710,26 @@
                     cutout: '70%',
                     plugins: {
                         legend: { position: 'bottom', labels: { usePointStyle: true, boxWidth: 8, font: { family: "'Inter', sans-serif", size: 12 } } },
-                        tooltip: {
-                            callbacks: {
-                                label: function(context) {
-                                    return ' ' + formatMoney(context.raw);
-                                }
-                            }
-                        }
+                        tooltip: { callbacks: { label: function(context) { return ' ' + formatMoney(context.raw); } } }
                     }
                 }
             });
         }
 
+        // --- TRANSACTION LIST (Responsive Cards) ---
         function renderTransactionsList() {
-            const tbody = document.getElementById('full-transactions-list');
+            const listContainer = document.getElementById('full-transactions-list');
             const emptyState = document.getElementById('empty-transactions-state');
-            tbody.innerHTML = '';
+            listContainer.innerHTML = '';
 
             if (transactions.length === 0) {
-                tbody.parentElement.classList.add('hidden');
+                listContainer.parentElement.classList.add('hidden');
                 emptyState.classList.remove('hidden');
                 emptyState.classList.add('flex');
                 return;
             }
 
-            tbody.parentElement.classList.remove('hidden');
+            listContainer.parentElement.classList.remove('hidden');
             emptyState.classList.add('hidden');
             emptyState.classList.remove('flex');
 
@@ -807,50 +739,51 @@
                 const amountClass = t.type === 'income' ? 'text-success' : 'text-danger';
                 const amountSign = t.type === 'income' ? '+' : '-';
 
-                tbody.innerHTML += `
-                    <tr onclick="viewTransactionDetails(${realIndex})" class="border-b border-slate-100 hover:bg-slate-50 transition-colors cursor-pointer">
-                        <td class="py-4 px-6 text-slate-500">${formatDate(t.date)}</td>
-                        <td class="py-4 px-6">
-                            <span class="inline-flex items-center gap-2 px-2.5 py-1 rounded-full text-xs font-medium ${conf.color}">
-                                <i class="fa-solid ${conf.icon}"></i> ${t.category}
-                            </span>
-                        </td>
-                        <td class="py-4 px-6 text-slate-800 font-medium">${t.description || '-'}</td>
-                        <td class="py-4 px-6 text-right font-bold ${amountClass}">${amountSign}${formatMoney(t.amount)}</td>
-                        <td class="py-4 px-6 text-center whitespace-nowrap">
-                            <button onclick="event.stopPropagation(); viewTransactionDetails(${realIndex})" class="w-8 h-8 rounded-full text-slate-400 hover:text-primary hover:bg-indigo-50 transition-colors mr-1" title="Chi tiết">
-                                <i class="fa-solid fa-circle-info"></i>
-                            </button>
-                            <button onclick="event.stopPropagation(); editTransaction(${realIndex})" class="w-8 h-8 rounded-full text-slate-400 hover:text-primary hover:bg-blue-50 transition-colors mr-1" title="Sửa">
-                                <i class="fa-solid fa-pen"></i>
-                            </button>
-                            <button onclick="event.stopPropagation(); deleteTransaction(${realIndex})" class="w-8 h-8 rounded-full text-slate-400 hover:text-danger hover:bg-red-50 transition-colors" title="Xoá">
-                                <i class="fa-solid fa-trash-can"></i>
-                            </button>
-                        </td>
-                    </tr>
+                listContainer.innerHTML += `
+                    <div onclick="viewTransactionDetails(${realIndex})" class="flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 hover:bg-slate-50 transition-colors cursor-pointer gap-3 md:gap-4">
+                        <div class="flex items-start md:items-center gap-4 flex-1 min-w-0">
+                            <div class="w-12 h-12 rounded-xl ${conf.color} flex items-center justify-center text-xl shrink-0">
+                                <i class="fa-solid ${conf.icon}"></i>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-base font-bold text-slate-800 truncate">${t.description || t.category}</h4>
+                                <div class="flex items-center gap-2 mt-1 text-xs text-slate-500">
+                                    <span class="font-medium bg-slate-100 px-2 py-0.5 rounded">${t.category}</span>
+                                    <span>•</span>
+                                    <span>${formatDate(t.date)}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between md:flex-col md:items-end gap-2 md:gap-1 mt-2 md:mt-0 pt-3 md:pt-0 border-t border-slate-100 md:border-0 w-full md:w-auto">
+                            <span class="font-bold text-base ${amountClass}">${amountSign}${formatMoney(t.amount)}</span>
+                            <div class="flex items-center gap-1">
+                                <button onclick="event.stopPropagation(); viewTransactionDetails(${realIndex})" class="w-8 h-8 rounded-full text-slate-400 hover:text-primary hover:bg-indigo-50 transition-colors" title="Chi tiết"><i class="fa-solid fa-circle-info"></i></button>
+                                <button onclick="event.stopPropagation(); editTransaction(${realIndex})" class="w-8 h-8 rounded-full text-slate-400 hover:text-primary hover:bg-blue-50 transition-colors" title="Sửa"><i class="fa-solid fa-pen"></i></button>
+                                <button onclick="event.stopPropagation(); deleteTransaction(${realIndex})" class="w-8 h-8 rounded-full text-slate-400 hover:text-danger hover:bg-red-50 transition-colors" title="Xoá"><i class="fa-solid fa-trash-can"></i></button>
+                            </div>
+                        </div>
+                    </div>
                 `;
             });
         }
 
-        // Render danh sách tạm ứng
+        // --- ADVANCES LIST (Responsive Cards) ---
         function renderAdvancesList() {
-            const tbody = document.getElementById('advances-list');
+            const listContainer = document.getElementById('advances-list');
             const emptyState = document.getElementById('empty-advances-state');
-            tbody.innerHTML = '';
+            listContainer.innerHTML = '';
 
             if (advances.length === 0) {
-                tbody.parentElement.classList.add('hidden');
+                listContainer.classList.add('hidden');
                 emptyState.classList.remove('hidden');
                 emptyState.classList.add('flex');
                 return;
             }
 
-            tbody.parentElement.classList.remove('hidden');
+            listContainer.classList.remove('hidden');
             emptyState.classList.add('hidden');
             emptyState.classList.remove('flex');
 
-            // Hiển thị người chưa hoàn ứng lên trước
             const sortedAdvances = [...advances].sort((a, b) => (a.status === 'pending' ? -1 : 1));
 
             sortedAdvances.forEach((a) => {
@@ -860,29 +793,34 @@
                     : `<span class="px-2 py-1 rounded text-xs font-medium bg-green-100 text-green-600">Đã hoàn ứng</span>`;
                 
                 const actionBtn = isPending
-                    ? `<button onclick="settleAdvance('${a.id}')" class="text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition-colors shadow-sm ml-2">Hoàn ứng</button>`
-                    : `<button onclick="deleteAdvance('${a.id}')" class="text-xs text-slate-400 hover:text-danger ml-2" title="Xoá bản ghi"><i class="fa-solid fa-trash-can"></i></button>`;
+                    ? `<button onclick="settleAdvance('${a.id}')" class="text-xs bg-primary text-white px-3 py-1.5 rounded-lg hover:bg-blue-600 transition-colors shadow-sm">Hoàn ứng</button>`
+                    : `<button onclick="deleteAdvance('${a.id}')" class="text-xs text-slate-400 hover:text-danger w-8 h-8 flex items-center justify-center rounded-full hover:bg-red-50 transition-colors" title="Xoá bản ghi"><i class="fa-solid fa-trash-can"></i></button>`;
 
-                tbody.innerHTML += `
-                    <tr class="border-b border-slate-100 hover:bg-slate-50 transition-colors">
-                        <td class="py-3 px-4 font-semibold text-slate-800">${a.person}</td>
-                        <td class="py-3 px-4">
-                            <div class="text-sm text-slate-800">${a.description}</div>
-                            <div class="text-xs text-slate-400">${formatDate(a.date)}</div>
-                        </td>
-                        <td class="py-3 px-4 text-right font-bold text-amber-600">${formatMoney(a.amount)}</td>
-                        <td class="py-3 px-4 text-center">
-                            <div class="flex items-center justify-center gap-2">
+                listContainer.innerHTML += `
+                    <div class="flex flex-col md:flex-row md:items-center justify-between p-4 md:p-5 hover:bg-slate-50 transition-colors gap-3 md:gap-4">
+                        <div class="flex items-start md:items-center gap-4 flex-1 min-w-0">
+                            <div class="w-10 h-10 rounded-full bg-indigo-100 text-primary flex items-center justify-center shrink-0 font-bold text-lg">
+                                ${a.person.charAt(0).toUpperCase()}
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <h4 class="text-base font-bold text-slate-800 truncate">${a.person}</h4>
+                                <p class="text-sm text-slate-600 truncate">${a.description}</p>
+                                <p class="text-xs text-slate-400 mt-0.5">${formatDate(a.date)}</p>
+                            </div>
+                        </div>
+                        <div class="flex items-center justify-between md:flex-col md:items-end gap-3 mt-2 md:mt-0 pt-3 md:pt-0 border-t border-slate-100 md:border-0 w-full md:w-auto">
+                            <span class="font-bold text-base ${isPending ? 'text-amber-600' : 'text-slate-500'}">${formatMoney(a.amount)}</span>
+                            <div class="flex items-center gap-2">
                                 ${statusBadge}
                                 ${actionBtn}
                             </div>
-                        </td>
-                    </tr>
+                        </div>
+                    </div>
                 `;
             });
         }
 
-        // --- CRUD OPERATIONS ---
+        // --- CRUD TRANSACTIONS ---
         document.getElementById('transaction-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -906,7 +844,6 @@
             }
 
             if (currentEditId) {
-                // Đang trong chế độ sửa
                 const txIndex = transactions.findIndex(t => t.id === currentEditId);
                 if (txIndex !== -1) {
                     transactions[txIndex] = { ...transactions[txIndex], type, date, amount, category, description, notes, image };
@@ -916,33 +853,20 @@
                 document.getElementById('btn-cancel-edit').classList.add('hidden');
                 document.getElementById('btn-submit-tx').innerText = 'Lưu Giao Dịch';
             } else {
-                // Thêm mới
                 const newTx = {
-                    id: Date.now().toString(),
-                    type,
-                    date,
-                    amount,
-                    category,
-                    description,
-                    notes,
-                    image
+                    id: Date.now().toString(), type, date, amount, category, description, notes, image
                 };
                 transactions.push(newTx);
                 showToast('Đã thêm giao dịch thành công!', 'success');
             }
 
             saveData();
-            
-            // Reset form
             this.reset();
             document.getElementById('t-amount').value = '';
             document.getElementById('t-date').value = new Date().toISOString().split('T')[0];
-            
-            // Xoá preview ảnh nếu có
             document.getElementById('image-preview-container').classList.add('hidden');
             document.getElementById('receipt-upload').value = '';
             
-            // Quay về dashboard
             navigate('dashboard');
         });
 
@@ -950,7 +874,6 @@
             const tx = transactions[index];
             currentEditId = tx.id;
             
-            // Điền dữ liệu vào form
             document.querySelector(`input[name="type"][value="${tx.type}"]`).checked = true;
             document.getElementById('t-date').value = tx.date;
             const amountInput = document.getElementById('t-amount');
@@ -968,11 +891,8 @@
                 document.getElementById('receipt-preview').src = '';
             }
             
-            // Cập nhật giao diện form
             document.getElementById('btn-submit-tx').innerText = 'Cập Nhật';
             document.getElementById('btn-cancel-edit').classList.remove('hidden');
-            
-            // Chuyển sang màn hình sửa
             navigate('add');
         }
 
@@ -987,7 +907,6 @@
             navigate('transactions');
         });
 
-        // Hàm mở Hộp thoại Xem chi tiết giao dịch
         function viewTransactionDetails(index) {
             const tx = transactions[index];
             const conf = categoryConfig[tx.category] || categoryConfig['Khác'];
@@ -1045,7 +964,6 @@
             modal.classList.add('flex');
         }
 
-        // Hàm đóng hộp thoại
         function closeTxModal() {
             const modal = document.getElementById('tx-modal');
             modal.classList.add('hidden');
@@ -1053,14 +971,13 @@
         }
 
         function deleteTransaction(index) {
-            // Using custom toast as confirm (simplified to direct delete for 1-file constraint without complex modals, just instant action with toast)
             transactions.splice(index, 1);
             saveData();
             renderTransactionsList();
             showToast('Đã xoá giao dịch.', 'info');
         }
 
-        // Xử lý Form Tạm Ứng
+        // --- CRUD ADVANCES ---
         document.getElementById('advance-form').addEventListener('submit', function(e) {
             e.preventDefault();
             
@@ -1068,7 +985,6 @@
             const amountStr = document.getElementById('a-amount').value;
             const date = document.getElementById('a-date').value;
             const description = document.getElementById('a-description').value;
-
             const amount = getNumberFromFormatted(amountStr);
 
             if (amount <= 0 || !person || !date) {
@@ -1077,17 +993,11 @@
             }
 
             const newAdvance = {
-                id: 'adv_' + Date.now().toString(),
-                person,
-                amount,
-                date,
-                description,
-                status: 'pending' // 'pending' hoặc 'settled'
+                id: 'adv_' + Date.now().toString(), person, amount, date, description, status: 'pending'
             };
             
             advances.push(newAdvance);
             saveData();
-            
             this.reset();
             document.getElementById('a-amount').value = '';
             document.getElementById('a-date').value = new Date().toISOString().split('T')[0];
@@ -1096,7 +1006,6 @@
             showToast(`Đã cấp tạm ứng cho ${person}.`, 'success');
         });
 
-        // Xử lý hoàn ứng
         function settleAdvance(id) {
             const advIndex = advances.findIndex(a => a.id === id);
             if (advIndex !== -1) {
@@ -1122,7 +1031,7 @@
             localStorage.setItem('smartSpend_advances', JSON.stringify(advances));
         }
 
-        // --- TOAST NOTIFICATION ---
+        // --- TOASTS ---
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -1133,29 +1042,22 @@
             if(type === 'info') { icon = 'fa-info-circle text-primary'; border = 'border-l-primary'; }
 
             toast.className = `toast bg-white border border-slate-200 border-l-4 ${border} shadow-lg rounded-xl p-4 flex items-center gap-3 min-w-[250px]`;
-            toast.innerHTML = `
-                <i class="fa-solid ${icon} text-xl"></i>
-                <p class="text-sm font-medium text-slate-800">${message}</p>
-            `;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-xl"></i><p class="text-sm font-medium text-slate-800">${message}</p>`;
             
             container.appendChild(toast);
-
             setTimeout(() => {
                 toast.classList.add('hiding');
                 toast.addEventListener('animationend', () => toast.remove());
             }, 3000);
         }
 
-        // --- AI RECEIPT SCANNER (GEMINI) ---
-        
-        // Hàm xoá ảnh đính kèm
+        // --- AI SCANNER ---
         function removeAttachedImage() {
             document.getElementById('image-preview-container').classList.add('hidden');
             document.getElementById('receipt-preview').src = '';
             document.getElementById('receipt-upload').value = '';
         }
 
-        // Quản lý cấu hình API Key
         function openApiKeyModal() {
             document.getElementById('api-key-input').value = localStorage.getItem('smartSpend_apiKey') || '';
             document.getElementById('apikey-modal').classList.remove('hidden');
@@ -1182,7 +1084,6 @@
             const file = e.target.files[0];
             if (!file) return;
 
-            // Hiển thị preview
             const previewContainer = document.getElementById('image-preview-container');
             const previewImg = document.getElementById('receipt-preview');
             const loader = document.getElementById('ai-loading');
@@ -1190,24 +1091,20 @@
             previewContainer.classList.remove('hidden');
             loader.classList.remove('hidden');
             
-            // Nén ảnh bằng Canvas trước khi sử dụng
             compressImage(file, async function(compressedDataUrl) {
                 previewImg.src = compressedDataUrl;
-                
-                // Lấy phần base64 bỏ header
                 const base64Data = compressedDataUrl.split(',')[1];
                 
                 try {
-                    await callGeminiAPI(base64Data, 'image/jpeg'); // Ảnh nén xong đã chuyển thành jpeg
+                    await callGeminiAPI(base64Data, 'image/jpeg');
                 } catch (error) {
                     console.error("Lỗi AI:", error);
                 } finally {
-                    loader.classList.add('hidden'); // Đảm bảo luôn tắt loader dù thành công hay lỗi
+                    loader.classList.add('hidden');
                 }
             });
         });
 
-        // HÀM NÉN ẢNH: Tránh bị lỗi tràn bộ nhớ (QuotaExceededError) khi lưu trên trình duyệt
         function compressImage(file, callback) {
             const reader = new FileReader();
             reader.readAsDataURL(file);
@@ -1216,28 +1113,20 @@
                 img.src = event.target.result;
                 img.onload = function() {
                     const canvas = document.createElement('canvas');
-                    const MAX_WIDTH = 800; // Chiều rộng tối đa an toàn
+                    const MAX_WIDTH = 800;
                     const MAX_HEIGHT = 800;
                     let width = img.width;
                     let height = img.height;
 
                     if (width > height) {
-                        if (width > MAX_WIDTH) {
-                            height *= MAX_WIDTH / width;
-                            width = MAX_WIDTH;
-                        }
+                        if (width > MAX_WIDTH) { height *= MAX_WIDTH / width; width = MAX_WIDTH; }
                     } else {
-                        if (height > MAX_HEIGHT) {
-                            width *= MAX_HEIGHT / height;
-                            height = MAX_HEIGHT;
-                        }
+                        if (height > MAX_HEIGHT) { width *= MAX_HEIGHT / height; height = MAX_HEIGHT; }
                     }
                     canvas.width = width;
                     canvas.height = height;
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
-                    
-                    // Trả về chuỗi base64 đã nén (định dạng JPEG, chất lượng 70%)
                     callback(canvas.toDataURL('image/jpeg', 0.7));
                 }
             };
@@ -1246,7 +1135,6 @@
         async function callGeminiAPI(base64Image, mimeType) {
             showToast('Đang phân tích hoá đơn bằng AI...', 'info');
             
-            // Construct payload for gemini-3-flash-preview structured output
             const prompt = `
 Bạn là một trợ lý tài chính thông minh. Hãy đọc thông tin từ hình ảnh hoá đơn này.
 Nhiệm vụ của bạn là trích xuất các thông tin sau:
@@ -1254,8 +1142,7 @@ Nhiệm vụ của bạn là trích xuất các thông tin sau:
 2. Ngày ghi trên hoá đơn (date, định dạng YYYY-MM-DD). Nếu không có, hãy để trống hoặc lấy ngày hiện tại.
 3. Phân loại danh mục (category) vào 1 trong các giá trị sau: "Ăn uống", "Di chuyển", "Mua sắm", "Hoá đơn", "Giải trí", "Văn phòng phẩm", "Tiếp khách", "Điện nước/Internet", "Sự kiện/Liên hoan", "Khác".
 4. Tên cửa hàng hoặc mô tả ngắn gọn món đồ (description).
-
-Trả về KẾT QUẢ DƯỚI DẠNG MỘT OBJECT JSON ĐÚNG CHUẨN, không kèm markdown code block, không giải thích gì thêm.
+Trả về KẾT QUẢ DƯỚI DẠNG MỘT OBJECT JSON ĐÚNG CHUẨN, không kèm markdown code block.
 Ví dụ: {"amount": 150000, "date": "2023-10-25", "category": "Ăn uống", "description": "Highlands Coffee"}
 `;
 
@@ -1264,20 +1151,12 @@ Ví dụ: {"amount": 150000, "date": "2023-10-25", "category": "Ăn uống", "de
                     role: "user",
                     parts: [
                         { text: prompt },
-                        {
-                            inlineData: {
-                                mimeType: mimeType,
-                                data: base64Image
-                            }
-                        }
+                        { inlineData: { mimeType: mimeType, data: base64Image } }
                     ]
                 }],
-                generationConfig: {
-                    responseMimeType: "application/json"
-                }
+                generationConfig: { responseMimeType: "application/json" }
             };
 
-            // Lấy API key do người dùng cài đặt
             let apiKey = localStorage.getItem('smartSpend_apiKey') || ''; 
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
 
@@ -1302,25 +1181,21 @@ Ví dụ: {"amount": 150000, "date": "2023-10-25", "category": "Ăn uống", "de
                     const jsonText = result.candidates[0].content.parts[0].text;
                     const parsedData = JSON.parse(jsonText);
                     
-                    // Điền dữ liệu vào form
                     if (parsedData.amount) {
                         const amountInput = document.getElementById('t-amount');
                         amountInput.value = parsedData.amount;
-                        formatCurrencyInput(amountInput); // format display
+                        formatCurrencyInput(amountInput); 
                     }
                     if (parsedData.date) document.getElementById('t-date').value = parsedData.date;
                     if (parsedData.description) document.getElementById('t-description').value = parsedData.description;
                     
                     if (parsedData.category) {
                         const select = document.getElementById('t-category');
-                        // Chọn loại "Chi tiền" vì hoá đơn thường là chi
                         document.querySelector('input[name="type"][value="expense"]').checked = true;
                         
-                        // Tìm option tương ứng
                         Array.from(select.options).forEach(opt => {
                             if(opt.value === parsedData.category) opt.selected = true;
                         });
-                        // Fallback nếu AI trả về linh tinh
                         if(select.value === "") select.value = "Khác";
                     }
 
