@@ -58,17 +58,23 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+        
+        /* Mobile Nav Active State (Đồng bộ màu với Số dư khả dụng) */
         .nav-item.active {
-            color: #FFB81C;
-            background-color: rgba(255, 184, 28, 0.1);
+            color: #ffffff !important;
+            background: linear-gradient(to bottom right, #002D72, #001b44);
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
         }
-        .glass-header {
-            background-color: #f8fafc;
-        }
+        
+        /* Desktop Nav Active State */
         @media (min-width: 768px) {
             .nav-item.active {
+                color: #FFB81C !important;
                 border-right: 4px solid #FFB81C;
-                background-color: rgba(255, 255, 255, 0.1);
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 0.5rem;
+                box-shadow: none;
             }
         }
     </style>
@@ -118,11 +124,11 @@
                 <!-- Balance Card -->
                 <div class="bg-gradient-to-br from-primary to-primaryDark text-white p-5 rounded-3xl shadow-card relative overflow-hidden flex flex-col justify-between">
                     <i class="fa-brands fa-cc-visa absolute -right-4 -bottom-4 text-white/10 text-8xl transform rotate-12"></i>
-                    <div>
+                    <div class="relative z-10">
                         <p class="text-white/80 text-sm font-medium mb-1">Số dư khả dụng</p>
                         <h3 class="text-4xl font-bold" id="dash-balance">0 đ</h3>
                     </div>
-                    <div class="mt-6 flex justify-between items-end text-sm">
+                    <div class="mt-6 flex justify-between items-end text-sm relative z-10">
                         <span class="text-accent font-medium"><i class="fa-solid fa-circle-check mr-1"></i> Đã đồng bộ</span>
                         <span>*** 8888</span>
                     </div>
@@ -164,7 +170,7 @@
 
         <!-- View: Transactions -->
         <div id="view-transactions" class="view-section hidden w-full p-4 md:p-8 pb-24 md:pb-8 max-w-7xl mx-auto">
-            <div class="flex justify-between items-center mb-6">
+            <div class="flex justify-between items-center mb-6 pt-2 md:pt-0">
                 <h2 class="text-2xl font-bold text-primary">Lịch sử giao dịch</h2>
                 <button onclick="openTransactionModal()" class="bg-primary text-white px-4 py-2 rounded-lg shadow flex items-center gap-2 hover:bg-primaryDark">
                     <i class="fa-solid fa-plus"></i> <span class="hidden md:inline">Thêm giao dịch</span>
@@ -198,7 +204,7 @@
 
         <!-- View: Advances -->
         <div id="view-advances" class="view-section hidden w-full p-4 md:p-8 pb-24 md:pb-8 max-w-7xl mx-auto">
-            <div class="flex justify-between items-center mb-6">
+            <div class="flex justify-between items-center mb-6 pt-2 md:pt-0">
                 <h2 class="text-2xl font-bold text-primary">Quản lý tạm ứng</h2>
                 <button onclick="openAdvanceModal()" class="bg-accent text-primary font-medium px-4 py-2 rounded-lg shadow flex items-center gap-2 hover:bg-yellow-500">
                     <i class="fa-solid fa-hand-holding-dollar"></i> <span class="hidden md:inline">Cấp tạm ứng</span>
@@ -242,19 +248,19 @@
         </div>
     </main>
 
-    <!-- Mobile Bottom Navigation -->
-    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around items-center py-2 pb-safe z-40 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-        <button onclick="navigate('dashboard')" id="nav-mobile-dashboard" class="nav-item flex-1 flex flex-col items-center p-2 text-slate-400">
+    <!-- Mobile Bottom Navigation (Đã tinh chỉnh vùng an toàn và lề) -->
+    <nav class="md:hidden fixed bottom-0 left-0 w-full bg-white border-t border-slate-200 flex justify-around items-center px-4 pt-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))] z-40 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)] gap-2">
+        <button onclick="navigate('dashboard')" id="nav-mobile-dashboard" class="nav-item flex-1 flex flex-col items-center py-2 px-1 text-slate-400 transition-all duration-300">
             <i class="fa-solid fa-chart-pie text-xl mb-1"></i>
-            <span class="text-[10px] font-medium">Tổng quan</span>
+            <span class="text-[10px] font-medium mt-1">Tổng quan</span>
         </button>
-        <button onclick="navigate('transactions')" id="nav-mobile-transactions" class="nav-item flex-1 flex flex-col items-center p-2 text-slate-400">
+        <button onclick="navigate('transactions')" id="nav-mobile-transactions" class="nav-item flex-1 flex flex-col items-center py-2 px-1 text-slate-400 transition-all duration-300">
             <i class="fa-solid fa-list-ul text-xl mb-1"></i>
-            <span class="text-[10px] font-medium">Giao dịch</span>
+            <span class="text-[10px] font-medium mt-1">Giao dịch</span>
         </button>
-        <button onclick="navigate('advances')" id="nav-mobile-advances" class="nav-item flex-1 flex flex-col items-center p-2 text-slate-400">
+        <button onclick="navigate('advances')" id="nav-mobile-advances" class="nav-item flex-1 flex flex-col items-center py-2 px-1 text-slate-400 transition-all duration-300">
             <i class="fa-solid fa-hand-holding-dollar text-xl mb-1"></i>
-            <span class="text-[10px] font-medium">Tạm ứng</span>
+            <span class="text-[10px] font-medium mt-1">Tạm ứng</span>
         </button>
     </nav>
 
@@ -524,15 +530,20 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
             document.getElementById(`view-${viewId}`).classList.remove('hidden');
             
-            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active', 'text-primary'));
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('active');
+                if(el.id.startsWith('nav-mobile-')) {
+                    el.classList.add('text-slate-400'); // Reset màu xám cho mobile icon không active
+                }
+            });
             
             const desktopNav = document.getElementById(`nav-desktop-${viewId}`);
             if(desktopNav) desktopNav.classList.add('active');
             
             const mobileNav = document.getElementById(`nav-mobile-${viewId}`);
             if(mobileNav) {
-                mobileNav.classList.add('active', 'text-primary');
-                mobileNav.classList.remove('text-slate-400');
+                mobileNav.classList.add('active');
+                mobileNav.classList.remove('text-slate-400'); // Gỡ màu xám để nhận màu trắng từ class active
             }
         }
 
@@ -630,7 +641,7 @@
                         <td class="py-4 px-6"><span class="bg-slate-100 px-2 py-1 rounded text-xs">${t.category}</span></td>
                         <td class="py-4 px-6 text-right font-bold ${color}">${sign}${formatMoney(t.amount)}</td>
                         <td class="py-4 px-6 text-center" onclick="event.stopPropagation()">
-                            <button onclick="editTransaction('${t.id}')" class="text-blue-500 hover:bg-blue-50 w-8 h-8 rounded"><i class="fa-solid fa-pen"></i></button>
+                            <button onclick="openTransactionModal('${t.id}')" class="text-blue-500 hover:bg-blue-50 w-8 h-8 rounded"><i class="fa-solid fa-pen"></i></button>
                             <button onclick="deleteTransaction('${t.id}')" class="text-red-500 hover:bg-red-50 w-8 h-8 rounded ml-1"><i class="fa-solid fa-trash"></i></button>
                         </td>
                     </tr>
@@ -653,7 +664,7 @@
                         <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-50">
                             <div class="font-bold ${color}">${sign}${formatMoney(t.amount)}</div>
                             <div class="flex gap-2" onclick="event.stopPropagation()">
-                                <button onclick="editTransaction('${t.id}')" class="text-xs px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md font-medium">Sửa</button>
+                                <button onclick="openTransactionModal('${t.id}')" class="text-xs px-3 py-1.5 bg-blue-50 text-blue-600 rounded-md font-medium">Sửa</button>
                                 <button onclick="deleteTransaction('${t.id}')" class="text-xs px-3 py-1.5 bg-red-50 text-red-600 rounded-md font-medium">Xoá</button>
                             </div>
                         </div>
