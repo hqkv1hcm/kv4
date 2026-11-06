@@ -253,7 +253,7 @@
 
     <!-- Mobile Floating Bottom Navigation -->
     <div class="md:hidden fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-4 right-4 z-40">
-        <nav class="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-floating flex justify-around items-center px-2 py-2 gap-2">
+        <nav class="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-floating flex justify-around items-center px-1 py-2 gap-1">
             <button onclick="navigate('dashboard')" id="nav-mobile-dashboard" class="nav-item flex-1 flex flex-col items-center py-2 px-1 text-slate-400 transition-all duration-300">
                 <i class="fa-solid fa-chart-pie text-xl mb-1"></i>
                 <span class="text-[10px] font-medium mt-1">Tổng quan</span>
@@ -265,6 +265,10 @@
             <button onclick="navigate('advances')" id="nav-mobile-advances" class="nav-item flex-1 flex flex-col items-center py-2 px-1 text-slate-400 transition-all duration-300">
                 <i class="fa-solid fa-hand-holding-dollar text-xl mb-1"></i>
                 <span class="text-[10px] font-medium mt-1">Tạm ứng</span>
+            </button>
+            <button onclick="document.getElementById('ai-config-modal').classList.remove('hidden')" class="nav-item flex-1 flex flex-col items-center py-2 px-1 text-slate-400 transition-all duration-300">
+                <i class="fa-solid fa-gear text-xl mb-1"></i>
+                <span class="text-[10px] font-medium mt-1">Cài đặt</span>
             </button>
         </nav>
     </div>
