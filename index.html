@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     
-    <!-- PWA Meta Tags cho iOS & Android -->
+    <!-- PWA Meta Tags -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <meta name="theme-color" content="#f8fafc">
@@ -18,9 +18,9 @@
             theme: {
                 extend: {
                     colors: {
-                        primary: '#002D72',   // Navy Blue
+                        primary: '#002D72',
                         primaryDark: '#001b44',
-                        accent: '#FFB81C',    // Gold
+                        accent: '#FFB81C',
                         background: '#f8fafc',
                         surface: '#ffffff'
                     },
@@ -33,11 +33,9 @@
         }
     </script>
 
-    <!-- FontAwesome & Chart.js & Firebase -->
+    <!-- FontAwesome & Chart.js -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
     <style>
         /* iOS & Mobile Fixes */
@@ -66,15 +64,13 @@
             scrollbar-width: none;
         }
         
-        /* Mobile Nav Active State (Nhẹ nhàng, hài hoà hơn) */
         .nav-item.active {
             color: #002D72 !important;
-            background-color: rgba(0, 45, 114, 0.08); /* Xanh Navy mờ 8% */
+            background-color: rgba(0, 45, 114, 0.08);
             border-radius: 0.75rem;
             box-shadow: none;
         }
         
-        /* Desktop Nav Active State */
         @media (min-width: 768px) {
             .nav-item.active {
                 color: #FFB81C !important;
@@ -136,7 +132,7 @@
                         <h3 class="text-4xl font-bold" id="dash-balance">0 đ</h3>
                     </div>
                     <div class="mt-6 flex justify-between items-end text-sm relative z-10">
-                        <span class="text-accent font-medium"><i class="fa-solid fa-circle-check mr-1"></i> Đã đồng bộ</span>
+                        <span class="text-accent font-medium"><i class="fa-solid fa-hard-drive mr-1"></i> Lưu trên máy</span>
                         <span>*** 8888</span>
                     </div>
                 </div>
@@ -255,7 +251,7 @@
         </div>
     </main>
 
-    <!-- Mobile Floating Bottom Navigation (Chống lẹm góc, Màu nền nhẹ nhàng) -->
+    <!-- Mobile Floating Bottom Navigation -->
     <div class="md:hidden fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-4 right-4 z-40">
         <nav class="bg-white/95 backdrop-blur-md border border-slate-200/80 rounded-2xl shadow-floating flex justify-around items-center px-2 py-2 gap-2">
             <button onclick="navigate('dashboard')" id="nav-mobile-dashboard" class="nav-item flex-1 flex flex-col items-center py-2 px-1 text-slate-400 transition-all duration-300">
@@ -417,20 +413,31 @@
         <div class="absolute top-4 right-4 text-white text-3xl font-bold p-2"><i class="fa-solid fa-xmark"></i></div>
     </div>
 
-    <!-- MODAL: Cấu hình AI / Firebase -->
+    <!-- MODAL: Cấu hình Hệ thống (Đã xoá Firebase) -->
     <div id="ai-config-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 flex flex-col justify-center items-center p-4">
         <div class="bg-white w-full max-w-md rounded-2xl shadow-2xl p-6">
             <h3 class="text-lg font-bold text-primary mb-4">Cấu hình Hệ thống</h3>
             
-            <div class="mb-4">
-                <label class="block text-xs font-medium text-slate-500 mb-1">Gemini API Key (Cho quét hoá đơn)</label>
-                <input type="password" id="config-gemini-key" class="w-full px-4 py-2 border rounded-lg text-sm" placeholder="AIzaSy...">
+            <div class="mb-6">
+                <label class="block text-xs font-medium text-slate-500 mb-1">Gemini API Key (Cho quét hoá đơn AI)</label>
+                <input type="password" id="config-gemini-key" class="w-full px-4 py-2 border rounded-lg text-sm bg-slate-50 focus:bg-white outline-none focus:border-primary" placeholder="AIzaSy...">
             </div>
             
-            <div class="mb-4 p-3 bg-blue-50 border border-blue-100 rounded-lg">
-                <label class="block text-xs font-bold text-primary mb-1"><i class="fa-solid fa-cloud"></i> Cấu hình Firebase Realtime</label>
-                <p class="text-xs text-slate-600 mb-2">Nhập chuỗi JSON Config của Firebase để bật đồng bộ máy tính & điện thoại. Bỏ trống để dùng Local Storage tĩnh.</p>
-                <textarea id="config-firebase" rows="4" class="w-full px-3 py-2 border border-blue-200 rounded-lg text-xs font-mono bg-white" placeholder='{"apiKey": "...","authDomain": "..."}'></textarea>
+            <!-- Phần Sao lưu / Phục hồi cục bộ -->
+            <div class="mb-4 p-3 bg-green-50 border border-green-100 rounded-lg">
+                <label class="block text-xs font-bold text-green-700 mb-1"><i class="fa-solid fa-hard-drive"></i> Sao lưu & Phục hồi dữ liệu</label>
+                <p class="text-xs text-slate-600 mb-3">Dữ liệu được lưu an toàn trên máy. Hãy xuất file để sao lưu hoặc chuyển sang thiết bị khác.</p>
+                
+                <div class="flex gap-2">
+                    <button type="button" onclick="exportData()" class="flex-1 py-2 bg-green-600 hover:bg-green-700 text-white rounded-md text-sm font-medium transition-colors shadow-sm">
+                        <i class="fa-solid fa-download"></i> Xuất (Tải về)
+                    </button>
+                    
+                    <label class="flex-1 py-2 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-md text-sm font-medium text-center cursor-pointer transition-colors shadow-sm">
+                        <i class="fa-solid fa-upload"></i> Nhập dữ liệu
+                        <input type="file" accept=".json, .txt" class="hidden" id="import-file" onchange="importData(event)">
+                    </label>
+                </div>
             </div>
             
             <div class="flex gap-2 mt-6">
@@ -451,7 +458,6 @@
         let transactions = [];
         let advances = [];
         let chartInstance = null;
-        let activeFirebaseDb = null;
         
         const categories = {
             expense: ['Ăn uống', 'Mua sắm', 'Di chuyển', 'Văn phòng phẩm', 'Tiếp khách', 'Điện nước/Internet', 'Sự kiện/Liên hoan', 'Khác'],
@@ -459,79 +465,30 @@
         };
 
         const config = {
-            geminiKey: localStorage.getItem('gemini_api_key') || '',
-            firebaseConfigStr: localStorage.getItem('firebase_config_str') || ''
+            geminiKey: localStorage.getItem('gemini_api_key') || ''
         };
         
         document.getElementById('config-gemini-key').value = config.geminiKey;
-        document.getElementById('config-firebase').value = config.firebaseConfigStr;
 
-        // --- 2. KHỞI TẠO FIREBASE / LOCAL STORAGE ---
+        // --- 2. KHỞI TẠO LOCAL STORAGE ---
         function initStorage() {
-            if (config.firebaseConfigStr && config.firebaseConfigStr.trim().length > 10) {
-                try {
-                    const fbConfig = JSON.parse(config.firebaseConfigStr);
-                    if (!firebase.apps.length) {
-                        firebase.initializeApp(fbConfig);
-                    }
-                    activeFirebaseDb = firebase.firestore();
-                    
-                    // Lắng nghe realtime
-                    activeFirebaseDb.collection("app_data").doc("shared_fund").onSnapshot((doc) => {
-                        if (doc.exists) {
-                            const data = doc.data();
-                            transactions = data.transactions ? JSON.parse(data.transactions) : [];
-                            advances = data.advances ? JSON.parse(data.advances) : [];
-                        } else {
-                            transactions = []; advances = [];
-                        }
-                        refreshUI();
-                    });
-                    showToast("Đã kết nối Cloud Đồng bộ", "success");
-                    return; // Thoát để Firebase tự gọi refreshUI
-                } catch (e) {
-                    console.error("Firebase init failed:", e);
-                    showToast("Lỗi cấu hình Firebase, dùng Local", "error");
-                }
-            }
-            
-            // Fallback LocalStorage
             transactions = JSON.parse(localStorage.getItem('expense_txs') || '[]');
             advances = JSON.parse(localStorage.getItem('expense_advs') || '[]');
             refreshUI();
         }
 
         function saveData() {
-            if (activeFirebaseDb) {
-                activeFirebaseDb.collection("app_data").doc("shared_fund").set({
-                    transactions: JSON.stringify(transactions),
-                    advances: JSON.stringify(advances),
-                    lastUpdated: firebase.firestore.FieldValue.serverTimestamp()
-                }).catch(err => {
-                    console.error("Cloud save error:", err);
-                    saveLocal();
-                });
-            } else {
-                saveLocal();
-            }
-            refreshUI();
-        }
-
-        function saveLocal() {
             localStorage.setItem('expense_txs', JSON.stringify(transactions));
             localStorage.setItem('expense_advs', JSON.stringify(advances));
+            refreshUI();
         }
 
         function saveConfig() {
             const gk = document.getElementById('config-gemini-key').value;
-            const fb = document.getElementById('config-firebase').value;
             localStorage.setItem('gemini_api_key', gk);
-            localStorage.setItem('firebase_config_str', fb);
             config.geminiKey = gk;
-            config.firebaseConfigStr = fb;
             document.getElementById('ai-config-modal').classList.add('hidden');
-            showToast("Đã lưu cấu hình. Vui lòng tải lại trang.");
-            setTimeout(() => window.location.reload(), 1500);
+            showToast("Đã lưu cấu hình.");
         }
 
         // --- 3. ĐIỀU HƯỚNG (NAVIGATION) ---
@@ -542,7 +499,7 @@
             document.querySelectorAll('.nav-item').forEach(el => {
                 el.classList.remove('active');
                 if(el.id.startsWith('nav-mobile-')) {
-                    el.classList.add('text-slate-400'); // Reset màu xám cho mobile icon không active
+                    el.classList.add('text-slate-400');
                 }
             });
             
@@ -552,7 +509,7 @@
             const mobileNav = document.getElementById(`nav-mobile-${viewId}`);
             if(mobileNav) {
                 mobileNav.classList.add('active');
-                mobileNav.classList.remove('text-slate-400'); // Gỡ màu xám để nhận màu của class active
+                mobileNav.classList.remove('text-slate-400');
             }
         }
 
@@ -576,7 +533,6 @@
             });
             
             let currentAdvances = advances.filter(a => !a.returned).reduce((sum, a) => sum + a.amount, 0);
-            
             let bal = inc - exp - currentAdvances;
             
             document.getElementById('dash-income').innerText = formatMoney(inc);
@@ -642,7 +598,6 @@
                 const sign = isExp ? '-' : '+';
                 const color = isExp ? 'text-red-600' : 'text-green-600';
                 
-                // Desktop
                 tb.innerHTML += `
                     <tr class="border-b hover:bg-slate-50 transition cursor-pointer" onclick="viewTxDetail('${t.id}')">
                         <td class="py-4 px-6">${t.date}</td>
@@ -656,7 +611,6 @@
                     </tr>
                 `;
 
-                // Mobile Card
                 mb.innerHTML += `
                     <div class="p-4 cursor-pointer hover:bg-slate-50 transition" onclick="viewTxDetail('${t.id}')">
                         <div class="flex justify-between items-start mb-2">
@@ -721,7 +675,6 @@
                 
                 const returnBtn = a.returned ? '' : `<button onclick="markAdvanceReturned('${a.id}')" class="text-xs bg-green-500 hover:bg-green-600 text-white px-2 py-1 rounded">Hoàn ứng</button>`;
 
-                // Desktop
                 tb.innerHTML += `
                     <tr class="border-b hover:bg-slate-50 transition">
                         <td class="py-4 px-6">${a.date}</td>
@@ -735,7 +688,6 @@
                     </tr>
                 `;
 
-                // Mobile
                 mb.innerHTML += `
                     <div class="p-4">
                         <div class="flex justify-between items-start mb-2">
@@ -913,7 +865,7 @@
             }
         }
 
-        // --- 7. XỬ LÝ HÌNH ẢNH & AI (Lightbox, Compression 1200px) ---
+        // --- 7. XỬ LÝ HÌNH ẢNH & AI (Base64 Thuần cục bộ) ---
         function handleImageUpload(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -943,12 +895,10 @@
 
                     const base64String = canvas.toDataURL("image/jpeg", QUALITY);
                     
-                    // Show Preview
                     document.getElementById('tx-image-data').value = base64String;
                     document.getElementById('tx-image-preview').src = base64String;
                     document.getElementById('tx-image-preview-container').classList.remove('hidden');
 
-                    // Gọi AI nếu có key
                     if(config.geminiKey) {
                         processReceiptWithAI(base64String.split(',')[1]);
                     } else {
@@ -1016,7 +966,58 @@
             }
         }
 
-        // --- 8. TIỆN ÍCH ---
+        // --- 8. TÍNH NĂNG SAO LƯU (EXPORT / IMPORT) ---
+        function exportData() {
+            const dataToExport = {
+                transactions: transactions,
+                advances: advances,
+                exportDate: new Date().toISOString()
+            };
+            
+            const dataStr = JSON.stringify(dataToExport, null, 2);
+            const blob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sao-luu-quy-${new Date().toISOString().split('T')[0]}.json`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            
+            showToast("Đã tải file sao lưu xuống máy!");
+        }
+
+        function importData(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const importedData = JSON.parse(e.target.result);
+                    if (importedData.transactions && importedData.advances) {
+                        if (confirm("CẢNH BÁO: Toàn bộ dữ liệu hiện tại sẽ bị ghi đè.\n\nBạn có chắc chắn muốn tiếp tục?")) {
+                            transactions = importedData.transactions;
+                            advances = importedData.advances;
+                            saveData();
+                            closeModal('ai-config-modal');
+                            showToast("Đã phục hồi dữ liệu thành công!");
+                        }
+                    } else {
+                        showToast("File không đúng cấu trúc ứng dụng!", "error");
+                    }
+                } catch (error) {
+                    console.error("Lỗi đọc file:", error);
+                    showToast("File bị lỗi hoặc không đọc được", "error");
+                }
+                event.target.value = ''; 
+            };
+            reader.readAsText(file);
+        }
+
+        // --- 9. TIỆN ÍCH ---
         function closeModal(id) {
             document.getElementById(id).classList.add('hidden');
         }
